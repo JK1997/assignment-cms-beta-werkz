@@ -5,6 +5,8 @@ import TopNav from './TopNav'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import StaffsData from '../sampleData/Staffs.json'
 import PaginationComponent from './PaginationComponent'
+import EmptyStaffList from './EmptyStaffList'
+import NonEmptyStaffList from './NonEmptyStaffList'
 
 export default function ButtonAppBar () {
   const [loading, setLoading] = useState(false)
@@ -56,11 +58,8 @@ export default function ButtonAppBar () {
                             </Grid>
                         </Grid>
                         {errorMessage && <Alert severity="error" sx={{mb:5}}>{errorMessage}</Alert>}
-                        <CardsDisplay staffs={currentStaffs} loading={loading} />
-                        <Box display="flex" justifyContent="center" mt={3}>
-                            <PaginationComponent cardsPerPage={cardsPerPage} totalCards={staffs.length} paginate={paginate} />
-                            <Chip label={"Total "+ staffs.length} color="primary" />
-                        </Box>
+                        { staffs.length == 0 ? <EmptyStaffList/> : <NonEmptyStaffList currentStaffs={currentStaffs}
+                          loading={loading} cardsPerPage={cardsPerPage} paginate={paginate} staffs={staffs}/>}
                     </Paper>
                 </Container>
             </Box>
