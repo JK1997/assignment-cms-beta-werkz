@@ -4,22 +4,20 @@ import React, { useEffect, useState } from 'react'
 import CardsDisplay from './CardsDisplay'
 import TopNav from './TopNav'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import * as Staffs from '../sampleData/Staffs.json';
 
 export default function ButtonAppBar () {
   const [loading, setLoading] = useState(false)
-
-  const [movieCard, setmovieCard] = useState([])
+  const [staffs, setStaffs] = useState<{name: string; gender: string; age: number; email: string;}[]>([])
   const [currentPage, setCurrentPage] = useState(1)
   const [cardsPerPage] = useState(10)
 
   useEffect(() => {
     const getMovieDetails = async () => {
       setLoading(true)
-      const dataFromServer = await axios.get(
-                `https://api.themoviedb.org/3/movie/popular?api_key=e11085cff59023d052e3a69484d6cd19&page=${currentPage}`
-      )
-      const responeFromServer = dataFromServer.data.results
-      setmovieCard(responeFromServer)
+      const staffs = Staffs.staffs
+      setStaffs(staffs)
+        
       setLoading(false)
     }
 
@@ -27,9 +25,9 @@ export default function ButtonAppBar () {
   }, [currentPage])
 
   // Get currCards
-  const indexOfLastCard = currentPage * cardsPerPage
+  /*const indexOfLastCard = currentPage * cardsPerPage
   const indexOfFirstCard = indexOfLastCard - cardsPerPage
-  const currentCards = movieCard.slice(indexOfFirstCard, indexOfLastCard)
+  const currentCards = movieCard.slice(indexOfFirstCard, indexOfLastCard)*/
 
   // Change page
   const paginate = (pageNumber: React.SetStateAction<number>) => { setCurrentPage(pageNumber) }
@@ -59,7 +57,7 @@ export default function ButtonAppBar () {
                                 </Button>
                             </Grid>
                         </Grid>
-                        <CardsDisplay movieCard={movieCard} loading={loading} />
+                        <CardsDisplay staffs={staffs} loading={loading} />
                         <Box display="flex" justifyContent="center" mt={3}>
                             <Pagination count={10} page={currentPage} onChange={handleChange} />
                         </Box>

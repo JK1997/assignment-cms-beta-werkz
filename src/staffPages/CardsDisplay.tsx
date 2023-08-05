@@ -3,23 +3,24 @@ import React from 'react'
 import {StaffCard} from './StaffCard'
 
 interface CardsDisplayProps {
-    movieCard: any[];
+    staffs: any[];
     loading: boolean
 }
 
-const CardsDisplay = ({movieCard, loading}: CardsDisplayProps) => {
+const CardsDisplay = ({staffs, loading}: CardsDisplayProps) => {
     if (loading) {
         return <h2>Loading...</h2>
     }
 
     return (
         <Grid container spacing={2}>
-            {movieCard?.map((title: { title: any, backdrop_path: string, vote_average: string }, index: number) => (
+            {staffs?.map((staff: { name: string, gender: string, age: number, email: string }, index: number) => (
                 <Grid key={index} item xs={12} md={6}>
                     <StaffCard
-                        title={title.title}
-                        imageurl={'https://image.tmdb.org/t/p/w500' + title.backdrop_path}
-                        body={'Rating: ' + title.vote_average}
+                        name={staff.name}
+                        gender={staff.gender}
+                        age={staff.age}
+                        email={staff.email}
                     />
                 </Grid>
             ))}
