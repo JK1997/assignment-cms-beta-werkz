@@ -1,7 +1,8 @@
-import { AppBar, Box, IconButton, Pagination, Toolbar, Typography } from '@mui/material'
+import { AppBar, Box, Container, IconButton, Pagination, Paper, Toolbar, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import CardsDisplay from './CardsDisplay'
+import TopNav from './TopNav'
 
 export default function ButtonAppBar () {
   const [loading, setLoading] = useState(false)
@@ -38,20 +39,16 @@ export default function ButtonAppBar () {
 
   return (
         <React.Fragment>
-            <AppBar>
-                <Toolbar>
-                    <Typography variant="h6">
-                        AppBar
-                    </Typography>
-                    <IconButton>
-                        1
-                    </IconButton>
-                </Toolbar>
-            </AppBar>
-            <Toolbar />
-            <CardsDisplay movieCard={movieCard} loading={loading} />
-            <Box display="flex" justifyContent="center" mt={3}>
-                <Pagination count={10} page={currentPage} onChange={handleChange} />
+            <TopNav />
+            <Box sx={{ backgroundColor: '#EFF8FF', minHeight: '100vh'}}>
+                <Container sx={{pt:5, pb:5}}>
+                    <Paper elevation={0} sx={{p:5}}>
+                        <CardsDisplay movieCard={movieCard} loading={loading} />
+                        <Box display="flex" justifyContent="center" mt={3}>
+                            <Pagination count={10} page={currentPage} onChange={handleChange} />
+                        </Box>
+                    </Paper>
+                </Container>
             </Box>
         </React.Fragment>
   )
