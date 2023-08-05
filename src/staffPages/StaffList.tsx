@@ -1,39 +1,32 @@
-import { Box, Button, Container, Grid, Pagination, Paper, Typography } from '@mui/material'
+import { Alert, Box, Button, Container, Grid, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import CardsDisplay from './CardsDisplay'
 import TopNav from './TopNav'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import StaffsData from '../sampleData/Staffs.json'
+import PaginationComponent from './PaginationComponent'
 
 export default function ButtonAppBar () {
   const [loading, setLoading] = useState(false)
   const [staffs, setStaffs] = useState<Array<{ name: string, gender: string, age: number, email: string }>>([])
   const [currentPage, setCurrentPage] = useState(1)
   const [cardsPerPage] = useState(10)
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
-    const getMovieDetails = async () => {
-      setLoading(true)
+    setLoading(true)
+    try {
       const staffs = StaffsData.staffs
       setStaffs(staffs)
-
+    } catch (error) {
+      setErrorMessage("Couldn't load staff data")
+    } finally {
       setLoading(false)
     }
-
-    getMovieDetails()
   }, [currentPage])
-
-  // Get currCards
-  /* const indexOfLastCard = currentPage * cardsPerPage
-  const indexOfFirstCard = indexOfLastCard - cardsPerPage
-  const currentCards = movieCard.slice(indexOfFirstCard, indexOfLastCard) */
 
   // Change page
   const paginate = (pageNumber: React.SetStateAction<number>) => { setCurrentPage(pageNumber) }
-
-  const handleChange = (event: any, value: React.SetStateAction<number>) => {
-    setCurrentPage(value)
-  }
 
   return (
         <React.Fragment>
@@ -56,9 +49,10 @@ export default function ButtonAppBar () {
                                 </Button>
                             </Grid>
                         </Grid>
+                        <Alert severity="error">{errorMessage}</Alert>
                         <CardsDisplay staffs={staffs} loading={loading} />
                         <Box display="flex" justifyContent="center" mt={3}>
-                            <Pagination count={10} page={currentPage} onChange={handleChange} />
+                            <PaginationComponent cardsPerPage={cardsPerPage} totalCards={staffs.length} paginate={paginate} />
                         </Box>
                     </Paper>
                 </Container>
