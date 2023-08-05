@@ -34,7 +34,7 @@ export default function MenuAppBar() {
 
     return (
         <Box>
-            <AppBar position="static">
+            <AppBar position="static" sx={{backgroundColor: 'white'}}>
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -44,7 +44,7 @@ export default function MenuAppBar() {
                         sx={{ mr: 2}}
                         onClick={() => navigate(-1)}
                     >
-                        <FontAwesomeIcon icon={faCircleArrowLeft} size="sm" />
+                        <FontAwesomeIcon icon={faCircleArrowLeft} size="sm" style={{color: "black"}}/>
                     </IconButton>
                     <div style={{ marginLeft: 'auto' }}>
                         <IconButton
@@ -55,7 +55,7 @@ export default function MenuAppBar() {
                             onClick={handleMenu}
                             color="inherit"
                         >
-                            <AccountCircle />
+                            <AccountCircle style={{ color: 'grey' }} fontSize="large" />
                         </IconButton>
                         <Menu
                             id="menu-appbar"
