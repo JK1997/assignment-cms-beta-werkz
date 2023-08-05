@@ -1,4 +1,4 @@
-import { AppBar, IconButton, Pagination, Toolbar, Typography } from '@mui/material'
+import { AppBar, Box, IconButton, Pagination, Toolbar, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import CardsDisplay from './CardsDisplay'
@@ -50,7 +50,9 @@ export default function ButtonAppBar () {
             </AppBar>
             <Toolbar />
             <CardsDisplay movieCard={movieCard} loading={loading} />
-            <Pagination count={10} page={currentPage} onChange={handleChange} />
+            <Box display="flex" justifyContent="center" mt={3}>
+                <Pagination count={10} page={currentPage} onChange={handleChange} />
+            </Box>
         </React.Fragment>
   )
 }
