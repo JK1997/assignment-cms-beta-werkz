@@ -13,11 +13,11 @@ import { Link, useNavigate } from 'react-router-dom'
 const defaultTheme = createTheme()
 
 export default function SignIn () {
-    const navigate = useNavigate();
+  const navigate = useNavigate()
 
-    const goToStaffList = () => {
-        navigate('/staffList')
-    }
+  const goToStaffList = () => {
+    navigate('/staffList')
+  }
 
   return (
         <ThemeProvider theme={defaultTheme}>
@@ -63,7 +63,7 @@ export default function SignIn () {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            onClick={() => goToStaffList()}
+                            onClick={() => { goToStaffList() }}
                         >
                             Sign In
                         </Button>

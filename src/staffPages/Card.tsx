@@ -1,11 +1,11 @@
 interface CardProps {
-    title: string;
-    imageurl: string;
-    body: string;
+  title: string
+  imageurl: string
+  body: string
 }
 
-export function Card({ title, imageurl, body }: CardProps) {
-    return (
+export function Card ({ title, imageurl, body }: CardProps) {
+  return (
         <div className="card">
             <div className="card-container">
                 <div className="image-container">
@@ -26,5 +26,5 @@ export function Card({ title, imageurl, body }: CardProps) {
                 </div>
             </div>
         </div>
-    );
+  )
 }

@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react'
 
 interface PaginationProps {
-    cardsPerPage: number;
-    totalCards: number;
-    paginate: any;
+  cardsPerPage: number
+  totalCards: number
+  paginate: any
 }
 
 const Pagination = ({ cardsPerPage, totalCards, paginate }: PaginationProps) => {
-    const pageNumbers = [];
+  const pageNumbers = []
 
-    for (let i = 1; i <= Math.ceil(totalCards / cardsPerPage); i++) {
-        pageNumbers.push(i);
-    }
+  for (let i = 1; i <= Math.ceil(totalCards / cardsPerPage); i++) {
+    pageNumbers.push(i)
+  }
 
-    return (
+  return (
         <nav>
             <ul className="pagination">
                 {pageNumbers.map((number) => (
@@ -25,7 +25,7 @@ const Pagination = ({ cardsPerPage, totalCards, paginate }: PaginationProps) => 
                 ))}
             </ul>
         </nav>
-    );
-};
+  )
+}
 
-export default Pagination;
+export default Pagination

@@ -18,5 +18,10 @@
     "rules": {
         "@typescript-eslint/explicit-function-return-type": "off",
         "promise/always-return": "off"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }
