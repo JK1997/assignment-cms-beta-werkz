@@ -8,18 +8,16 @@ import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import bgImage1 from './images/bg-1.svg'
 import bgImage2 from './images/bg-2.svg'
+import { Link, useNavigate } from 'react-router-dom'
 
 const defaultTheme = createTheme()
 
 export default function SignIn () {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password')
-    })
-  }
+    const navigate = useNavigate();
+
+    const goToStaffList = () => {
+        navigate('/staffList')
+    }
 
   return (
         <ThemeProvider theme={defaultTheme}>
@@ -39,7 +37,7 @@ export default function SignIn () {
                     <Typography component="h1" variant="h5">
                         Welcome back!
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" noValidate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
                             required
@@ -61,10 +59,11 @@ export default function SignIn () {
                             autoComplete="current-password"
                         />
                         <Button
-                            type="submit"
+                            type="button"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            onClick={() => goToStaffList()}
                         >
                             Sign In
                         </Button>

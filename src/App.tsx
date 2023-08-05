@@ -1,12 +1,16 @@
 import React from 'react'
-import SignIn from './SignIn'
+import {Routes, Route} from 'react-router-dom';
 
-function App () {
-  return (
-    <div className="App">
-     <SignIn />
-    </div>
-  )
+import SignIn from './SignIn'
+import StaffList from './staffPages/StaffList'
+
+function App() {
+    return (
+        <Routes>
+            <Route path="/" element={<SignIn />} />
+            <Route path="staffList" element={<StaffList />} />
+        </Routes>
+    )
 }
 
 export default App
