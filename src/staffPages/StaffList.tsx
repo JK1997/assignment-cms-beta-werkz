@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Container, Grid, Paper, Typography } from '@mui/material'
+import { Alert, Box, Button, Chip, Container, Grid, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import CardsDisplay from './CardsDisplay'
 import TopNav from './TopNav'
@@ -22,13 +22,19 @@ export default function ButtonAppBar () {
       setErrorMessage("Couldn't load staff data")
     } finally {
       setLoading(false)
+      setErrorMessage("")
     }
   }, [currentPage])
 
   // Change page
   const paginate = (pageNumber: React.SetStateAction<number>) => { setCurrentPage(pageNumber) }
 
-  return (
+  // Calculate indices for the currently displayed cards
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  const currentStaffs = staffs.slice(indexOfFirstCard, indexOfLastCard);
+    
+    return (
         <React.Fragment>
             <TopNav />
             <Box sx={{ backgroundColor: '#EFF8FF', minHeight: '100vh' }}>
@@ -49,10 +55,11 @@ export default function ButtonAppBar () {
                                 </Button>
                             </Grid>
                         </Grid>
-                        <Alert severity="error">{errorMessage}</Alert>
-                        <CardsDisplay staffs={staffs} loading={loading} />
+                        {errorMessage && <Alert severity="error" sx={{mb:5}}>{errorMessage}</Alert>}
+                        <CardsDisplay staffs={currentStaffs} loading={loading} />
                         <Box display="flex" justifyContent="center" mt={3}>
                             <PaginationComponent cardsPerPage={cardsPerPage} totalCards={staffs.length} paginate={paginate} />
+                            <Chip label={"Total "+ staffs.length} color="primary" />
                         </Box>
                     </Paper>
                 </Container>

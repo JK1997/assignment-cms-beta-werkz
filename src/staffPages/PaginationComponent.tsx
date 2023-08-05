@@ -1,19 +1,19 @@
 import React from 'react'
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
 
 interface PaginationProps {
   cardsPerPage: number
   totalCards: number
-  paginate: (pageNumber: number) => void;
+  paginate: (pageNumber: number) => void
 }
 
 const PaginationComponent = ({ cardsPerPage, totalCards, paginate }: PaginationProps) => {
-  const pageCount = Math.ceil(totalCards / cardsPerPage);
+  const pageCount = Math.ceil(totalCards / cardsPerPage)
 
-    const handleChange = (event: React.ChangeEvent<unknown>, page: number) => {
-        paginate(page);
-    };
+  const handleChange = (event: React.ChangeEvent<unknown>, page: number) => {
+    paginate(page)
+  }
 
   return (
       <Stack spacing={2} direction="row" justifyContent="center">
