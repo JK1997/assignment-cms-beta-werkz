@@ -7,13 +7,20 @@ import StaffsData from '../sampleData/Staffs.json'
 import PaginationComponent from './PaginationComponent'
 import EmptyStaffList from './EmptyStaffList'
 import NonEmptyStaffList from './NonEmptyStaffList'
+import ColorPalette from './ColorPalette'
+import tinycolor from 'tinycolor2';
 
-export default function ButtonAppBar () {
+export default function StaffList () {
   const [loading, setLoading] = useState(false)
   const [staffs, setStaffs] = useState<Array<{ name: string, gender: string, age: number, email: string }>>([])
   const [currentPage, setCurrentPage] = useState(1)
   const [cardsPerPage] = useState(10)
   const [errorMessage, setErrorMessage] = useState('')
+  const [selectedColor, setSelectedColor] = useState('#628DF2'); // Default color
+
+  const handleColorChange = (color: string) => {
+      setSelectedColor(color)
+  }
 
   useEffect(() => {
     setLoading(true)
@@ -39,7 +46,7 @@ export default function ButtonAppBar () {
     return (
         <React.Fragment>
             <TopNav />
-            <Box sx={{ backgroundColor: '#EFF8FF', minHeight: '100vh' }}>
+            <Box sx={{ backgroundColor: tinycolor(selectedColor).lighten(30).toString(), minHeight: '100vh' }}>
                 <Container sx={{ pt: 5, pb: 5 }}>
                     <Paper elevation={0} sx={{ p: 5 }}>
                         <Grid container spacing={1} mb={2}>
@@ -51,7 +58,7 @@ export default function ButtonAppBar () {
                             </Grid>
                             <Grid xs={12} md={3}>
                                 <Button variant="contained" startIcon={<AddCircleOutlineIcon />} size="large"
-                                        style={{ backgroundColor: '#628DF2' }}
+                                        style={{ backgroundColor: selectedColor }}
                                 >
                                     New Profile
                                 </Button>
@@ -63,6 +70,7 @@ export default function ButtonAppBar () {
                     </Paper>
                 </Container>
             </Box>
+            <ColorPalette onSelectColor={(color: string) => handleColorChange(color)} />
         </React.Fragment>
   )
 }
