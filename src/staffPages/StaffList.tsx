@@ -66,7 +66,7 @@ export default function StaffList () {
                         </Grid>
                         {errorMessage && <Alert severity="error" sx={{mb:5}}>{errorMessage}</Alert>}
                         { staffs.length == 0 ? <EmptyStaffList/> : <NonEmptyStaffList currentStaffs={currentStaffs}
-                          loading={loading} cardsPerPage={cardsPerPage} paginate={paginate} staffs={staffs}/>}
+                          loading={loading} cardsPerPage={cardsPerPage} paginate={paginate} staffs={staffs} selectedColor={selectedColor}/>}
                     </Paper>
                 </Container>
             </Box>
