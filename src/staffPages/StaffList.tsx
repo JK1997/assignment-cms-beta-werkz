@@ -9,6 +9,7 @@ import EmptyStaffList from './EmptyStaffList'
 import NonEmptyStaffList from './NonEmptyStaffList'
 import ColorPalette from './ColorPalette'
 import tinycolor from 'tinycolor2';
+import { useNavigate } from 'react-router-dom'
 
 export default function StaffList () {
   const [loading, setLoading] = useState(false)
@@ -25,8 +26,8 @@ export default function StaffList () {
   useEffect(() => {
     setLoading(true)
     try {
-      const staffs = StaffsData.staffs
-      setStaffs(staffs)
+      /*const staffs = StaffsData.staffs
+      setStaffs(staffs)*/
     } catch (error) {
       setErrorMessage("Couldn't load staff data")
     } finally {
@@ -42,6 +43,12 @@ export default function StaffList () {
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
   const currentStaffs = staffs.slice(indexOfFirstCard, indexOfLastCard);
+
+  const navigate = useNavigate()
+
+    const goToAddStaff = () => {
+      navigate('/addStaff')
+    }
     
     return (
         <React.Fragment>
@@ -58,7 +65,7 @@ export default function StaffList () {
                             </Grid>
                             <Grid xs={12} md={3}>
                                 <Button variant="contained" startIcon={<AddCircleOutlineIcon />} size="large"
-                                        style={{ backgroundColor: selectedColor }}
+                                        style={{ backgroundColor: selectedColor }} onClick={()=>{goToAddStaff()}}
                                 >
                                     New Profile
                                 </Button>
