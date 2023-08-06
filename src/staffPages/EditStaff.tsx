@@ -42,10 +42,11 @@ export default function EditStaff () {
 
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
-        /*setStaffs((prevStaffs) => [...prevStaffs, data])
-        const existingStaffs = JSON.parse(localStorage.getItem('staffs') || '[]')
-        const updatedStaffs = [...existingStaffs, data]
-        localStorage.setItem('staffs', JSON.stringify(updatedStaffs))*/
+        const updatedStaffs = staffs.map((staff) =>
+            staff.id === (id ? parseInt(id, 10) : NaN) ? { ...staff, ...data } : staff
+        );
+
+        localStorage.setItem('staffs', JSON.stringify(updatedStaffs));
         setSuccessMsg("Staff profile updated  successfully.")
         reset()
         setTimeout(() => {
@@ -61,13 +62,7 @@ export default function EditStaff () {
                 const selectedStaff = savedStaffs.find((staff: { id: number; }) => staff.id === parseInt(id, 10));
 
                 if (selectedStaff) {
-                    console.log('Setting staff data:', selectedStaff);
                     setStaffData(selectedStaff);
-
-                    // Set default value of gender field
-                    console.log('staffData.gender ' + selectedStaff.gender)
-                    // setValue('gender', selectedStaff.gender || 'Male')
-                    console.log('staffData after set:', staffData)
                 }
             };
 
@@ -78,6 +73,11 @@ export default function EditStaff () {
     useEffect(() => {
         reset(staffData);
     }, [staffData, reset]);
+
+    useEffect(() => {
+        const savedStaffs = JSON.parse(localStorage.getItem('staffs') || '[]');
+        setStaffs(savedStaffs);
+    }, []);
 
     return(
         <React.Fragment>
