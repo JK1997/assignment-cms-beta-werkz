@@ -11,15 +11,19 @@ interface CardProps {
   gender: string
   age: number
   email: string
+  username: string
 }
 
-export function StaffCard ({ id, name, gender, age, email }: CardProps) {
+export function StaffCard ({ id, name, gender, age, email, username }: CardProps) {
     const editStaffUrl = `/editStaff/${id}`
 
   return (
       <ButtonBase
           component={Link}
-          to={editStaffUrl}
+          to={{
+              pathname: editStaffUrl,
+              search:`?username=${encodeURIComponent(username)}`
+            }}
           focusRipple
           sx={{ width: '100%', borderRadius: 0, textDecoration: 'none' }}
       >

@@ -15,6 +15,7 @@ export default function AddStaff () {
     const [successMsg, setSuccessMsg] = useState("");
     const [staffs, setStaffs] = useState<Array<{ id: number, name: string, gender: string, age: number, email: string }>>([])
     const totalStaffs = location.state?.totalStaffs || 0
+    const username = location.state?.username || ""
 
     const handleColorChange = (color: string) => {
         setSelectedColor(color)
@@ -64,7 +65,7 @@ export default function AddStaff () {
 
     return(
         <React.Fragment>
-            <TopNav />
+            <TopNav username={username}/>
             <Box sx={{ backgroundColor: tinycolor(selectedColor).lighten(30).toString(), minHeight: `calc(100vh - ${64}px)` }}>
                 <Container sx={{ pt: 5, pb: 5 }}>
                     <Paper elevation={0} sx={{ p: 5, minHeight:'60vh'}}>

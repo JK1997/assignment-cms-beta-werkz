@@ -5,11 +5,14 @@ import TopNav from './TopNav'
 import tinycolor from 'tinycolor2';
 import { useForm, SubmitHandler  } from 'react-hook-form';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import { useNavigate, useParams } from 'react-router-dom';
+import {useLocation, useNavigate, useParams } from 'react-router-dom';
 
 
 export default function EditStaff () {
     const navigate = useNavigate()
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const username = queryParams.get('username')!;
     const {id} = useParams<{id: string}>()
     const [selectedColor, setSelectedColor] = useState('#628DF2'); // Default color
     const [successMsg, setSuccessMsg] = useState("");
@@ -81,7 +84,7 @@ export default function EditStaff () {
 
     return(
         <React.Fragment>
-            <TopNav />
+            <TopNav username={username}/>
             <Box sx={{ backgroundColor: tinycolor(selectedColor).lighten(30).toString(), minHeight: `calc(100vh - ${64}px)` }}>
                 <Container sx={{ pt: 5, pb: 5 }}>
                     <Paper elevation={0} sx={{ p: 5, minHeight:'60vh'}}>

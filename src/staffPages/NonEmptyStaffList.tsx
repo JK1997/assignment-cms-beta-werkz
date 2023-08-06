@@ -10,12 +10,13 @@ interface NonEmptyStaffListProps {
     paginate: (pageNumber: number) => void
     staffs: any[]
     selectedColor: string
+    username: string
 }
 
-const NonEmptyStaffList = ({currentStaffs, loading, cardsPerPage, paginate, staffs, selectedColor}: NonEmptyStaffListProps) => {
+const NonEmptyStaffList = ({currentStaffs, loading, cardsPerPage, paginate, staffs, selectedColor, username}: NonEmptyStaffListProps) => {
     return(
         <div>
-            <CardsDisplay staffs={currentStaffs} loading={loading} />
+            <CardsDisplay staffs={currentStaffs} loading={loading} username={username} />
             <Box display="flex" justifyContent="center" mt={3}>
                 <PaginationComponent cardsPerPage={cardsPerPage} totalCards={staffs.length} paginate={paginate} />
                 <Chip label={"Total "+ staffs.length} sx={{ml:2, backgroundColor:selectedColor, color:'white'}}/>

@@ -5,9 +5,10 @@ import {StaffCard} from './StaffCard'
 interface CardsDisplayProps {
     staffs: any[]
     loading: boolean
+    username: string
 }
 
-const CardsDisplay = ({staffs, loading}: CardsDisplayProps) => {
+const CardsDisplay = ({staffs, loading, username}: CardsDisplayProps) => {
     if (loading) {
         return <h2>Loading...</h2>
     }
@@ -22,6 +23,7 @@ const CardsDisplay = ({staffs, loading}: CardsDisplayProps) => {
                         gender={staff.gender}
                         age={staff.age}
                         email={staff.email}
+                        username={username}
                     />
                 </Grid>
             ))}

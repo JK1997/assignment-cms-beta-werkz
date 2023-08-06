@@ -52,7 +52,7 @@ export default function StaffList () {
   const currentStaffs = staffs.slice(indexOfFirstCard, indexOfLastCard);
 
     const goToAddStaff = () => {
-      navigate('/addStaff', {state: {totalStaffs} })
+      navigate('/addStaff', {state: {totalStaffs, username} })
     }
     
     return (
@@ -78,7 +78,7 @@ export default function StaffList () {
                         </Grid>
                         {errorMessage && <Alert severity="error" sx={{mb:5}}>{errorMessage}</Alert>}
                         { staffs.length == 0 ? <EmptyStaffList/> : <NonEmptyStaffList currentStaffs={currentStaffs}
-                          loading={loading} cardsPerPage={cardsPerPage} paginate={paginate} staffs={staffs} selectedColor={selectedColor}/>}
+                          loading={loading} cardsPerPage={cardsPerPage} paginate={paginate} staffs={staffs} selectedColor={selectedColor} username={username}/>}
                     </Paper>
                 </Container>
             </Box>
