@@ -46,7 +46,7 @@ export default function StaffList () {
     return (
         <React.Fragment>
             <TopNav />
-            <Box sx={{ backgroundColor: tinycolor(selectedColor).lighten(30).toString(), minHeight: '100vh' }}>
+            <Box sx={{ backgroundColor: tinycolor(selectedColor).lighten(30).toString(), minHeight: `calc(100vh - ${64}px)` }}>
                 <Container sx={{ pt: 5, pb: 5 }}>
                     <Paper elevation={0} sx={{ p: 5 }}>
                         <Grid container spacing={1} mb={2}>
