@@ -76,7 +76,7 @@ export function StaffCard ({ id, name, gender, age, email, username }: CardProps
                           color: '#272727',
                           opacity: 1
                         }}>
-                            {gender == 'Prefer not to say' ? '-' : gender}
+                            {gender === 'Prefer not to say' ? '-' : gender}
                         </Typography>
                     </Grid>
                     <Grid xs={12} md={3}>

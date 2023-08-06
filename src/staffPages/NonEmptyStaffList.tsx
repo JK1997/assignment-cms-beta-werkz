@@ -1,4 +1,4 @@
-import { Box, Chip, Stack } from '@mui/material'
+import { Box, Chip } from '@mui/material'
 import React from 'react'
 import CardsDisplay from './CardsDisplay'
 import PaginationComponent from './PaginationComponent'

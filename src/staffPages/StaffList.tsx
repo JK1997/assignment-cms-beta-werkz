@@ -1,10 +1,8 @@
-import { Alert, Box, Button, Chip, Container, Grid, Paper, Typography } from '@mui/material'
+import { Alert, Box, Button, Container, Grid, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import CardsDisplay from './CardsDisplay'
 import TopNav from './TopNav'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import StaffsData from '../sampleData/Staffs.json'
-import PaginationComponent from './PaginationComponent'
+// import StaffsData from '../sampleData/Staffs.json'
 import EmptyStaffList from './EmptyStaffList'
 import NonEmptyStaffList from './NonEmptyStaffList'
 import ColorPalette from './ColorPalette'
@@ -77,7 +75,7 @@ export default function StaffList () {
                             </Grid>
                         </Grid>
                         {errorMessage && <Alert severity="error" sx={{ mb: 5 }}>{errorMessage}</Alert>}
-                        { staffs.length == 0
+                        { staffs.length === 0
                           ? <EmptyStaffList/>
                           : <NonEmptyStaffList currentStaffs={currentStaffs}
                           loading={loading} cardsPerPage={cardsPerPage} paginate={paginate} staffs={staffs} selectedColor={selectedColor} username={username}/>}

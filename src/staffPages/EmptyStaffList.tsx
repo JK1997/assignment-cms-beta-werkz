@@ -1,4 +1,4 @@
-import { Grid, Stack, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import React from 'react'
 import EmptyStateImage from '../images/empty-state.svg'
 
