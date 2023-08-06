@@ -3,17 +3,23 @@ import React, {useEffect, useState } from 'react'
 import ColorPalette from './ColorPalette'
 import TopNav from './TopNav'
 import tinycolor from 'tinycolor2';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler  } from 'react-hook-form';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { useNavigate, useParams } from 'react-router-dom';
 
 
 export default function EditStaff () {
     const navigate = useNavigate()
-    const {id} = useParams()
+    const {id} = useParams<{id: string}>()
     const [selectedColor, setSelectedColor] = useState('#628DF2'); // Default color
     const [successMsg, setSuccessMsg] = useState("");
-    const [staffs, setStaffs] = useState<Array<{ name: string, gender: string, age: number, email: string }>>([])
+    const [staffs, setStaffs] = useState<Array<{ id: number, name: string, gender: string, age: number, email: string }>>([])
+    const [staffData, setStaffData] = useState({
+        name: '',
+        gender: '',
+        age: 0,
+        email: ''
+    });
 
     const handleColorChange = (color: string) => {
         setSelectedColor(color)
@@ -30,16 +36,17 @@ export default function EditStaff () {
         register,
         handleSubmit,
         formState: { errors },
+        setValue,
         reset
     } = useForm<FormData>();
 
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
-        setStaffs((prevStaffs) => [...prevStaffs, data])
+        /*setStaffs((prevStaffs) => [...prevStaffs, data])
         const existingStaffs = JSON.parse(localStorage.getItem('staffs') || '[]')
         const updatedStaffs = [...existingStaffs, data]
-        localStorage.setItem('staffs', JSON.stringify(updatedStaffs))
-        setSuccessMsg("Staff is created successfully.")
+        localStorage.setItem('staffs', JSON.stringify(updatedStaffs))*/
+        setSuccessMsg("Staff profile updated  successfully.")
         reset()
         setTimeout(() => {
             navigate('/staffList')
@@ -47,8 +54,30 @@ export default function EditStaff () {
     };
 
     useEffect(() => {
-        console.log(staffs)
-    }, [staffs])
+        // Fetch staff data from localStorage based on the ID
+        if(id){
+            const fetchStaffData = () => {
+                const savedStaffs = JSON.parse(localStorage.getItem('staffs') || '[]');
+                const selectedStaff = savedStaffs.find((staff: { id: number; }) => staff.id === parseInt(id, 10));
+
+                if (selectedStaff) {
+                    console.log('Setting staff data:', selectedStaff);
+                    setStaffData(selectedStaff);
+
+                    // Set default value of gender field
+                    console.log('staffData.gender ' + selectedStaff.gender)
+                    // setValue('gender', selectedStaff.gender || 'Male')
+                    console.log('staffData after set:', staffData)
+                }
+            };
+
+            fetchStaffData();
+        }
+    }, [id, setValue]);
+
+    useEffect(() => {
+        reset(staffData);
+    }, [staffData, reset]);
 
     return(
         <React.Fragment>
@@ -68,12 +97,14 @@ export default function EditStaff () {
                                             label="Name *"
                                             type="text"
                                             sx={{ width: '90%' }}
+                                            InputLabelProps={{ shrink: true }}
                                             {...register("name", {
                                                 required: "Name is required."
                                             })}
                                             inputProps={{ maxLength: 20 }}
                                             error={!!errors.name}
                                             helperText={errors.name && "Name is required"}
+                                            defaultValue={staffData.name}
                                         />
                                     </div>
                                 </Grid>
@@ -89,6 +120,7 @@ export default function EditStaff () {
                                             InputProps={{ inputProps: { min: 13, max: 99 } }}
                                             error={!!errors.age}
                                             helperText={errors.age && "Age is required" }
+                                            defaultValue={staffData.age}
                                         />
                                     </div>
                                 </Grid>
@@ -100,6 +132,7 @@ export default function EditStaff () {
                                             label="Email *"
                                             type="email"
                                             sx={{ width: '90%' }}
+                                            InputLabelProps={{ shrink: true }}
                                             {...register("email", {
                                                 required: "Email is required.",
                                                 pattern: {
@@ -110,6 +143,7 @@ export default function EditStaff () {
                                             inputProps={{ maxLength: 30 }}
                                             error={!!errors.email}
                                             helperText={errors.email && errors.email.message}
+                                            defaultValue={staffData.email}
                                         />
                                     </div>
                                 </Grid>
@@ -120,9 +154,8 @@ export default function EditStaff () {
                                             select
                                             label="Gender *"
                                             sx={{ width: '90%' }}
-                                            {...register("gender", {
-                                                required: "Gender is required."
-                                            })}
+                                            value={staffData.gender || 'Male'}
+                                            onChange={(e) => setValue('gender', e.target.value)}
                                             error={!!errors.gender}
                                             helperText={errors.gender && "Gender is required" }
                                         >

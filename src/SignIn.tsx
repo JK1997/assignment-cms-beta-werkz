@@ -65,7 +65,7 @@ export default function SignIn () {
                             sx={{ mt: 3, mb: 2 }}
                             onClick={() => { goToStaffList() }}
                         >
-                            Sign In
+                            Login
                         </Button>
                     </Box>
                 </Box>
