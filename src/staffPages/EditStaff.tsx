@@ -50,8 +50,9 @@ export default function EditStaff () {
         );
 
         localStorage.setItem('staffs', JSON.stringify(updatedStaffs));
+        setStaffs(updatedStaffs);
+
         setSuccessMsg("Staff profile updated  successfully.")
-        reset()
         setTimeout(() => {
             navigate('/staffList')
         }, 2000)
@@ -157,8 +158,8 @@ export default function EditStaff () {
                                             select
                                             label="Gender *"
                                             sx={{ width: '90%' }}
-                                            value={staffData.gender || 'Male'}
-                                            onChange={(e) => setValue('gender', e.target.value)}
+                                            value={staffData.gender}
+                                            onChange={(e) => setStaffData({ ...staffData, gender: e.target.value })}
                                             error={!!errors.gender}
                                             helperText={errors.gender && "Gender is required" }
                                         >
