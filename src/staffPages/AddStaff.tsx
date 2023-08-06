@@ -1,5 +1,5 @@
-import { Box, Button, Container, Grid, MenuItem, Paper, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import {Alert, Box, Button, Container, Grid, MenuItem, Paper, TextField, Typography } from '@mui/material';
+import React, {useEffect, useState } from 'react'
 import ColorPalette from './ColorPalette'
 import TopNav from './TopNav'
 import tinycolor from 'tinycolor2';
@@ -9,6 +9,8 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
 export default function AddStaff () {
     const [selectedColor, setSelectedColor] = useState('#628DF2'); // Default color
+    const [successMsg, setSuccessMsg] = useState("");
+    const [staffs, setStaffs] = useState<Array<{ name: string, gender: string, age: number, email: string }>>([])
 
     const handleColorChange = (color: string) => {
         setSelectedColor(color)
@@ -16,21 +18,28 @@ export default function AddStaff () {
 
     interface FormData {
         name: string
+        gender: string
         age: number
         email: string
-        gender: string
     }
 
     const {
         register,
         handleSubmit,
-        formState: { errors }
+        formState: { errors },
+        reset
     } = useForm<FormData>();
 
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
-        console.log(data);
+        setStaffs((prevStaffs) => [...prevStaffs, data])
+        setSuccessMsg("Staff is created successfully.")
+        reset()
     };
+
+    useEffect(() => {
+        console.log(staffs)
+    }, [staffs])
 
     return(
         <React.Fragment>
@@ -39,11 +48,12 @@ export default function AddStaff () {
                 <Container sx={{ pt: 5, pb: 5 }}>
                     <Paper elevation={0} sx={{ p: 5, minHeight:'60vh'}}>
                         <form onSubmit={handleSubmit(onSubmit)}>
+                            {successMsg && <Alert severity="success" sx={{mb:3}}>{successMsg}</Alert>}
                             <Grid container spacing={2} mb={2}>
-                                    <Grid xs={12} md={12} mb={2}>
+                                    <Grid xs={12} md={12} mb={5}>
                                         <Typography variant="h5">New Profile</Typography>
                                     </Grid>
-                                    <Grid xs={12} md={4} mb={2}>
+                                    <Grid xs={12} md={4} mb={3}>
                                         <div className="form-control">
                                             <TextField
                                                 label="Name *"
@@ -58,7 +68,7 @@ export default function AddStaff () {
                                             />
                                         </div>
                                     </Grid>
-                                    <Grid xs={12} md={2} mb={2}>
+                                    <Grid xs={12} md={2} mb={3}>
                                         <div className="form-control">
                                             <TextField
                                                 label="Age *"
@@ -75,7 +85,7 @@ export default function AddStaff () {
                                     </Grid>
                                     <Grid xs={12} md={6}>
                                     </Grid>
-                                <Grid xs={12} md={4} mb={2}>
+                                <Grid xs={12} md={4} mb={4}>
                                     <div className="form-control">
                                         <TextField
                                             label="Email *"
@@ -94,7 +104,7 @@ export default function AddStaff () {
                                         />
                                     </div>
                                 </Grid>
-                                <Grid xs={12} md={2} mb={2}>
+                                <Grid xs={12} md={2} mb={3}>
                                     <div className="form-control">
                                         <TextField
                                             id="outlined-select-currency"

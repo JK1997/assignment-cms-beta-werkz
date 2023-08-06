@@ -8,7 +8,7 @@ import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import bgImage1 from './images/bg-1.svg'
 import bgImage2 from './images/bg-2.svg'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const defaultTheme = createTheme()
 
