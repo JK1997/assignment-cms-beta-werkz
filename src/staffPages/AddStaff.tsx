@@ -5,9 +5,11 @@ import TopNav from './TopNav'
 import tinycolor from 'tinycolor2';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import { useNavigate } from 'react-router-dom';
 
 
 export default function AddStaff () {
+    const navigate = useNavigate()
     const [selectedColor, setSelectedColor] = useState('#628DF2'); // Default color
     const [successMsg, setSuccessMsg] = useState("");
     const [staffs, setStaffs] = useState<Array<{ name: string, gender: string, age: number, email: string }>>([])
@@ -33,8 +35,14 @@ export default function AddStaff () {
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
         setStaffs((prevStaffs) => [...prevStaffs, data])
+        const existingStaffs = JSON.parse(localStorage.getItem('staffs') || '[]')
+        const updatedStaffs = [...existingStaffs, data]
+        localStorage.setItem('staffs', JSON.stringify(updatedStaffs))
         setSuccessMsg("Staff is created successfully.")
         reset()
+        setTimeout(() => {
+            navigate('/staffList')
+        }, 2000)
     };
 
     useEffect(() => {

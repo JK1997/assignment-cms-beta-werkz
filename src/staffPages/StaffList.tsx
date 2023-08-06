@@ -12,6 +12,7 @@ import tinycolor from 'tinycolor2';
 import { useNavigate } from 'react-router-dom'
 
 export default function StaffList () {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [staffs, setStaffs] = useState<Array<{ name: string, gender: string, age: number, email: string }>>([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -28,6 +29,8 @@ export default function StaffList () {
     try {
       /*const staffs = StaffsData.staffs
       setStaffs(staffs)*/
+        const savedStaffs = JSON.parse(localStorage.getItem('staffs') || '[]')
+        setStaffs(savedStaffs)
     } catch (error) {
       setErrorMessage("Couldn't load staff data")
     } finally {
@@ -43,8 +46,6 @@ export default function StaffList () {
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
   const currentStaffs = staffs.slice(indexOfFirstCard, indexOfLastCard);
-
-  const navigate = useNavigate()
 
     const goToAddStaff = () => {
       navigate('/addStaff')
