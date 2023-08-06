@@ -5,11 +5,12 @@ import TopNav from './TopNav'
 import tinycolor from 'tinycolor2';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 export default function EditStaff () {
     const navigate = useNavigate()
+    const {id} = useParams()
     const [selectedColor, setSelectedColor] = useState('#628DF2'); // Default color
     const [successMsg, setSuccessMsg] = useState("");
     const [staffs, setStaffs] = useState<Array<{ name: string, gender: string, age: number, email: string }>>([])

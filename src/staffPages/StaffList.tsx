@@ -19,6 +19,7 @@ export default function StaffList () {
   const [cardsPerPage] = useState(10)
   const [errorMessage, setErrorMessage] = useState('')
   const [selectedColor, setSelectedColor] = useState('#628DF2'); // Default color
+  const totalStaffs = staffs.length
 
   const handleColorChange = (color: string) => {
       setSelectedColor(color)
@@ -48,7 +49,7 @@ export default function StaffList () {
   const currentStaffs = staffs.slice(indexOfFirstCard, indexOfLastCard);
 
     const goToAddStaff = () => {
-      navigate('/addStaff')
+      navigate('/addStaff', {state: {totalStaffs} })
     }
     
     return (

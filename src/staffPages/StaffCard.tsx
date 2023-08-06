@@ -3,22 +3,24 @@ import CardContent from '@mui/joy/CardContent';
 import AspectRatio from '@mui/joy/AspectRatio';
 import {ButtonBase, Grid, Typography } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { useNavigate } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 interface CardProps {
+  id: number;
   name: string
   gender: string
   age: number
   email: string
 }
 
-export function StaffCard ({ name, gender, age, email }: CardProps) {
-    const navigate = useNavigate()
+export function StaffCard ({ id, name, gender, age, email }: CardProps) {
+    const editStaffUrl = `/editStaff/${id}`
 
   return (
       <ButtonBase
+          component={Link}
+          to={editStaffUrl}
           focusRipple
-          onClick={() => { navigate('/editStaff') }}
           sx={{ width: '100%', borderRadius: 0, textDecoration: 'none' }}
       >
         <Card

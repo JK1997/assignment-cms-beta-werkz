@@ -3,7 +3,7 @@ import React from 'react'
 import {StaffCard} from './StaffCard'
 
 interface CardsDisplayProps {
-    staffs: any[];
+    staffs: any[]
     loading: boolean
 }
 
@@ -14,9 +14,10 @@ const CardsDisplay = ({staffs, loading}: CardsDisplayProps) => {
 
     return (
         <Grid container spacing={2}>
-            {staffs?.map((staff: { name: string, gender: string, age: number, email: string }, index: number) => (
+            {staffs?.map((staff: { id: number, name: string, gender: string, age: number, email: string }, index: number) => (
                 <Grid key={index} item xs={12} md={6}>
                     <StaffCard
+                        id={staff.id}
                         name={staff.name}
                         gender={staff.gender}
                         age={staff.age}
