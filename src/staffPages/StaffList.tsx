@@ -55,7 +55,7 @@ export default function StaffList () {
             <TopNav />
             <Box sx={{ backgroundColor: tinycolor(selectedColor).lighten(30).toString(), minHeight: `calc(100vh - ${64}px)` }}>
                 <Container sx={{ pt: 5, pb: 5 }}>
-                    <Paper elevation={0} sx={{ p: 5 }}>
+                    <Paper elevation={0} sx={{ p: 5, minHeight:'60vh'}}>
                         <Grid container spacing={1} mb={2}>
                             <Grid xs={12} md={3}>
                                 <Typography variant="h5">Profiles</Typography>
