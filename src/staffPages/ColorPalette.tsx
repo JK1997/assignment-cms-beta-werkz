@@ -1,4 +1,4 @@
-import { Fab, Menu, MenuItem } from '@mui/material'
+import { Fab, Menu, MenuItem, useMediaQuery, useTheme } from '@mui/material'
 import React from 'react'
 import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined'
 import CircleIcon from '@mui/icons-material/Circle'
@@ -8,6 +8,8 @@ interface ColorPaletteProps {
 }
 
 export default function ColorPalette ({ onSelectColor }: ColorPaletteProps) {
+  const theme = useTheme()
+  const isSmBreakpoint = useMediaQuery(theme.breakpoints.down('sm'))
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -21,7 +23,7 @@ export default function ColorPalette ({ onSelectColor }: ColorPaletteProps) {
         <div
             style={{
               position: 'fixed',
-              bottom: '40px',
+              [isSmBreakpoint ? 'top' : 'bottom']: '40px',
               right: '40px',
               zIndex: '1000'
             }}

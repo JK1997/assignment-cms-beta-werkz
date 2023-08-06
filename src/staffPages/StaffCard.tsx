@@ -1,7 +1,7 @@
 import Card from '@mui/joy/Card'
 import CardContent from '@mui/joy/CardContent'
 import AspectRatio from '@mui/joy/AspectRatio'
-import { ButtonBase, Grid, Typography } from '@mui/material'
+import { ButtonBase, Grid, Typography, useMediaQuery, useTheme } from '@mui/material'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import { Link } from 'react-router-dom'
 
@@ -16,6 +16,9 @@ interface CardProps {
 
 export function StaffCard ({ id, name, gender, age, email, username }: CardProps) {
   const editStaffUrl = `/editStaff/${id}`
+  const theme = useTheme()
+  const isSmBreakpoint = useMediaQuery(theme.breakpoints.down('sm'))
+  const iconSize = isSmBreakpoint ? 50 : 80
 
   return (
       <ButtonBase
@@ -31,17 +34,17 @@ export function StaffCard ({ id, name, gender, age, email, username }: CardProps
             variant="outlined"
             orientation="horizontal"
             sx={{
-              width: 414,
+              width: '90vw',
               height: 120,
               '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }
             }}
         >
-            <AspectRatio ratio="1" sx={{ width: 80, mt: 2 }}>
-                <AccountCircle style={{ color: '#F2F2F2', backgroundColor: '#FCFCFD' }} fontSize="large" />
+            <AspectRatio ratio="1" sx={{ width: iconSize, mt: 2 }}>
+                <AccountCircle style={{ color: '#F2F2F2', backgroundColor: '#FCFCFD' }} />
             </AspectRatio>
             <CardContent>
                 <Grid container spacing={2} p={2}>
-                    <Grid xs={12} md={4}>
+                    <Grid xs={7} md={4}>
                         <Typography sx={{
                           fontSize: '14px',
                           fontFamily: 'Nunito',
@@ -59,9 +62,9 @@ export function StaffCard ({ id, name, gender, age, email, username }: CardProps
                             {name}
                         </Typography>
                     </Grid>
-                    <Grid xs={12} md={2}>
+                    <Grid md={2}>
                     </Grid>
-                    <Grid xs={12} md={3}>
+                    <Grid xs={3} md={3}>
                         <Typography sx={{
                           fontSize: '14px',
                           fontFamily: 'Nunito',
@@ -79,7 +82,7 @@ export function StaffCard ({ id, name, gender, age, email, username }: CardProps
                             {gender === 'Prefer not to say' ? '-' : gender}
                         </Typography>
                     </Grid>
-                    <Grid xs={12} md={3}>
+                    <Grid xs={2} md={3}>
                         <Typography sx={{
                           fontSize: '14px',
                           fontFamily: 'Nunito',

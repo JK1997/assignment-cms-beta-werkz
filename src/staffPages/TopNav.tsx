@@ -10,13 +10,15 @@ import Menu from '@mui/material/Menu'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import { Tooltip } from '@mui/material'
+import { Tooltip, useMediaQuery, useTheme } from '@mui/material'
 
 interface TopNavProps {
   username: string
 }
 
 const TopNav = ({ username }: TopNavProps) => {
+  const theme = useTheme()
+  const isSmBreakpoint = useMediaQuery(theme.breakpoints.down('sm'))
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -49,7 +51,7 @@ const TopNav = ({ username }: TopNavProps) => {
                             <FontAwesomeIcon icon={faCircleArrowLeft} size="sm" style={{ color: 'black' }}/>
                         </IconButton>
                     </Tooltip>
-                    <Typography sx={{ color: '#272727', marginLeft: 'auto' }}>{username !== 'null' && username}</Typography>
+                    <Typography sx={{ color: '#272727', marginLeft: isSmBreakpoint ? 0 : 'auto',  paddingLeft: isSmBreakpoint ? 5 : ''}}>{username !== 'null' && username}</Typography>
                     <div>
                         <IconButton
                             size="large"

@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Container, Grid, Paper, Typography } from '@mui/material'
+import { Alert, Box, Button, Container, Grid, Paper, Typography, useMediaQuery, useTheme } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import TopNav from './TopNav'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
@@ -12,6 +12,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 export default function StaffList () {
   const navigate = useNavigate()
   const location = useLocation()
+  const theme = useTheme()
+  const isSmBreakpoint = useMediaQuery(theme.breakpoints.down('sm'))
   const queryParams = new URLSearchParams(location.search)
   const username = queryParams.get('username')!
   const [loading, setLoading] = useState(false)
@@ -66,7 +68,7 @@ export default function StaffList () {
                             <Grid xs={12} md={6}>
 
                             </Grid>
-                            <Grid xs={12} md={3}>
+                            <Grid xs={12} md={3} sx={{ display: 'flex', justifyContent: isSmBreakpoint ? 'center' : 'flex-end', position: isSmBreakpoint ? 'fixed' : 'static', bottom: 16, right: 10, zIndex: 1000, width: isSmBreakpoint ? '95vw' : 'auto'  }}>
                                 <Button variant="contained" startIcon={<AddCircleOutlineIcon />} size="large"
                                         style={{ backgroundColor: selectedColor }} onClick={() => { goToAddStaff() }}
                                 >
