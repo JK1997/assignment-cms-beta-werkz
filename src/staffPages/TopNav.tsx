@@ -14,8 +14,13 @@ import Menu from '@mui/material/Menu';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { Tooltip } from '@mui/material';
 
-export default function MenuAppBar() {
+interface TopNavProps {
+    username: string
+}
+
+const TopNav = ({username} : TopNavProps) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -36,17 +41,20 @@ export default function MenuAppBar() {
         <Box>
             <AppBar position="static" sx={{backgroundColor: 'white'}}>
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2}}
-                        onClick={() => navigate(-1)}
-                    >
-                        <FontAwesomeIcon icon={faCircleArrowLeft} size="sm" style={{color: "black"}}/>
-                    </IconButton>
-                    <div style={{ marginLeft: 'auto' }}>
+                    <Tooltip title="Back To Previous">
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ mr: 2}}
+                            onClick={() => navigate(-1)}
+                        >
+                            <FontAwesomeIcon icon={faCircleArrowLeft} size="sm" style={{color: "black"}}/>
+                        </IconButton>
+                    </Tooltip>
+                    <Typography sx={{color:'#272727', marginLeft: 'auto'}}>{username}</Typography>
+                    <div>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -80,3 +88,4 @@ export default function MenuAppBar() {
         </Box>
     );
 }
+export default TopNav

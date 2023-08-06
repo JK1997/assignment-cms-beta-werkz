@@ -9,10 +9,13 @@ import EmptyStaffList from './EmptyStaffList'
 import NonEmptyStaffList from './NonEmptyStaffList'
 import ColorPalette from './ColorPalette'
 import tinycolor from 'tinycolor2';
-import { useNavigate } from 'react-router-dom'
+import {useLocation, useNavigate } from 'react-router-dom'
 
 export default function StaffList () {
   const navigate = useNavigate()
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const username = queryParams.get('username')!;
   const [loading, setLoading] = useState(false)
   const [staffs, setStaffs] = useState<Array<{ name: string, gender: string, age: number, email: string }>>([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -54,7 +57,7 @@ export default function StaffList () {
     
     return (
         <React.Fragment>
-            <TopNav />
+            <TopNav username={username}/>
             <Box sx={{ backgroundColor: tinycolor(selectedColor).lighten(30).toString(), minHeight: `calc(100vh - ${64}px)` }}>
                 <Container sx={{ pt: 5, pb: 5 }}>
                     <Paper elevation={0} sx={{ p: 5, minHeight:'60vh'}}>
