@@ -15,7 +15,7 @@ const defaultTheme = createTheme()
 
 export default function SignIn () {
   const navigate = useNavigate()
-  const [username, setUsername] = useState("")
+  const [username, setUsername] = useState('')
 
   const goToStaffList = () => {
     navigate(`/staffList?username=${username}`)
@@ -33,7 +33,7 @@ export default function SignIn () {
                       zIndex: 999
                     }}
                 >
-                    <Typography component="h1" variant="h4"  sx={{fontWeight: 800 }}>
+                    <Typography component="h1" variant="h4" sx={{ fontWeight: 800 }}>
                         Login
                     </Typography>
                     <Typography component="h1" variant="h5">
@@ -50,7 +50,7 @@ export default function SignIn () {
                                 name="username"
                                 autoFocus
                                 value={username}
-                                onChange = {(e) => setUsername(e.target.value)}
+                                onChange = {(e) => { setUsername(e.target.value) }}
                             />
                             <TextField
                                 margin="normal"
@@ -87,12 +87,13 @@ export default function SignIn () {
                     }}
                 />
                 <Typography sx={{
-                    position: 'absolute',
-                    top: 20,
-                    left: 50,
-                    fontFamily: 'Nunito',
-                    fontSize: '12px',
-                    zIndex: 100}}>16:10:23</Typography>
+                  position: 'absolute',
+                  top: 20,
+                  left: 50,
+                  fontFamily: 'Nunito',
+                  fontSize: '12px',
+                  zIndex: 100
+                }}>16:10:23</Typography>
                 {/* Bottom right background image */}
                 <div
                     style={{

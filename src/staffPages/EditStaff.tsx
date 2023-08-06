@@ -1,96 +1,94 @@
-import {Alert, Box, Button, Container, Grid, MenuItem, Paper, TextField, Typography } from '@mui/material';
-import React, {useEffect, useState } from 'react'
+import { Alert, Box, Button, Container, Grid, MenuItem, Paper, TextField, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import ColorPalette from './ColorPalette'
 import TopNav from './TopNav'
-import tinycolor from 'tinycolor2';
-import { useForm, SubmitHandler  } from 'react-hook-form';
+import tinycolor from 'tinycolor2'
+import { useForm, type SubmitHandler } from 'react-hook-form'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import {useLocation, useNavigate, useParams } from 'react-router-dom';
-
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 export default function EditStaff () {
-    const navigate = useNavigate()
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const username = queryParams.get('username')!;
-    const {id} = useParams<{id: string}>()
-    const [selectedColor, setSelectedColor] = useState('#628DF2'); // Default color
-    const [successMsg, setSuccessMsg] = useState("");
-    const [staffs, setStaffs] = useState<Array<{ id: number, name: string, gender: string, age: number, email: string }>>([])
-    const [staffData, setStaffData] = useState({
-        name: '',
-        gender: '',
-        age: 0,
-        email: ''
-    });
+  const navigate = useNavigate()
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  const username = queryParams.get('username')!
+  const { id } = useParams<{ id: string }>()
+  const [selectedColor, setSelectedColor] = useState('#628DF2') // Default color
+  const [successMsg, setSuccessMsg] = useState('')
+  const [staffs, setStaffs] = useState<Array<{ id: number, name: string, gender: string, age: number, email: string }>>([])
+  const [staffData, setStaffData] = useState({
+    name: '',
+    gender: '',
+    age: 0,
+    email: ''
+  })
 
-    const handleColorChange = (color: string) => {
-        setSelectedColor(color)
-    }
+  const handleColorChange = (color: string) => {
+    setSelectedColor(color)
+  }
 
-    interface FormData {
-        name: string
-        gender: string
-        age: number
-        email: string
-    }
+  interface FormData {
+    name: string
+    gender: string
+    age: number
+    email: string
+  }
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        setValue,
-        reset
-    } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    reset
+  } = useForm<FormData>()
 
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    const updatedStaffs = staffs.map((staff) =>
+      staff.id === (id ? parseInt(id, 10) : NaN) ? { ...staff, ...data } : staff
+    )
 
-    const onSubmit: SubmitHandler<FormData> = (data) => {
-        const updatedStaffs = staffs.map((staff) =>
-            staff.id === (id ? parseInt(id, 10) : NaN) ? { ...staff, ...data } : staff
-        );
+    localStorage.setItem('staffs', JSON.stringify(updatedStaffs))
+    setStaffs(updatedStaffs)
 
-        localStorage.setItem('staffs', JSON.stringify(updatedStaffs));
-        setStaffs(updatedStaffs);
+    setSuccessMsg('Staff profile updated  successfully.')
+    setTimeout(() => {
+      navigate('/staffList')
+    }, 2000)
+  }
 
-        setSuccessMsg("Staff profile updated  successfully.")
-        setTimeout(() => {
-            navigate('/staffList')
-        }, 2000)
-    };
+  useEffect(() => {
+    // Fetch staff data from localStorage based on the ID
+    if (id) {
+      const fetchStaffData = () => {
+        const savedStaffs = JSON.parse(localStorage.getItem('staffs') || '[]')
+        const selectedStaff = savedStaffs.find((staff: { id: number }) => staff.id === parseInt(id, 10))
 
-    useEffect(() => {
-        // Fetch staff data from localStorage based on the ID
-        if(id){
-            const fetchStaffData = () => {
-                const savedStaffs = JSON.parse(localStorage.getItem('staffs') || '[]');
-                const selectedStaff = savedStaffs.find((staff: { id: number; }) => staff.id === parseInt(id, 10));
-
-                if (selectedStaff) {
-                    setStaffData(selectedStaff);
-                }
-            };
-
-            fetchStaffData();
+        if (selectedStaff) {
+          setStaffData(selectedStaff)
         }
-    }, [id, setValue]);
+      }
 
-    useEffect(() => {
-        reset(staffData);
-    }, [staffData, reset]);
+      fetchStaffData()
+    }
+  }, [id, setValue])
 
-    useEffect(() => {
-        const savedStaffs = JSON.parse(localStorage.getItem('staffs') || '[]');
-        setStaffs(savedStaffs);
-    }, []);
+  useEffect(() => {
+    reset(staffData)
+  }, [staffData, reset])
 
-    return(
+  useEffect(() => {
+    const savedStaffs = JSON.parse(localStorage.getItem('staffs') || '[]')
+    setStaffs(savedStaffs)
+  }, [])
+
+  return (
         <React.Fragment>
             <TopNav username={username}/>
             <Box sx={{ backgroundColor: tinycolor(selectedColor).lighten(30).toString(), minHeight: `calc(100vh - ${64}px)` }}>
                 <Container sx={{ pt: 5, pb: 5 }}>
-                    <Paper elevation={0} sx={{ p: 5, minHeight:'60vh'}}>
+                    <Paper elevation={0} sx={{ p: 5, minHeight: '60vh' }}>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            {successMsg && <Alert severity="success" sx={{mb:3}}>{successMsg}</Alert>}
+                            {successMsg && <Alert severity="success" sx={{ mb: 3 }}>{successMsg}</Alert>}
                             <Grid container spacing={2} mb={2}>
                                 <Grid xs={12} md={12} mb={5}>
                                     <Typography variant="h5">Edit Profile</Typography>
@@ -102,12 +100,12 @@ export default function EditStaff () {
                                             type="text"
                                             sx={{ width: '90%' }}
                                             InputLabelProps={{ shrink: true }}
-                                            {...register("name", {
-                                                required: "Name is required."
+                                            {...register('name', {
+                                              required: 'Name is required.'
                                             })}
                                             inputProps={{ maxLength: 20 }}
-                                            error={!!errors.name}
-                                            helperText={errors.name && "Name is required"}
+                                            error={!(errors.name == null)}
+                                            helperText={(errors.name != null) && 'Name is required'}
                                             defaultValue={staffData.name}
                                         />
                                     </div>
@@ -118,12 +116,12 @@ export default function EditStaff () {
                                             label="Age *"
                                             type="number"
                                             sx={{ width: '90%' }}
-                                            {...register("age", {
-                                                required: "Age is required."
+                                            {...register('age', {
+                                              required: 'Age is required.'
                                             })}
                                             InputProps={{ inputProps: { min: 13, max: 99 } }}
-                                            error={!!errors.age}
-                                            helperText={errors.age && "Age is required" }
+                                            error={!(errors.age == null)}
+                                            helperText={(errors.age != null) && 'Age is required' }
                                             defaultValue={staffData.age}
                                         />
                                     </div>
@@ -137,16 +135,16 @@ export default function EditStaff () {
                                             type="email"
                                             sx={{ width: '90%' }}
                                             InputLabelProps={{ shrink: true }}
-                                            {...register("email", {
-                                                required: "Email is required.",
-                                                pattern: {
-                                                    value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
-                                                    message: "Email is not valid."
-                                                }
+                                            {...register('email', {
+                                              required: 'Email is required.',
+                                              pattern: {
+                                                value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                                                message: 'Email is not valid.'
+                                              }
                                             })}
                                             inputProps={{ maxLength: 30 }}
-                                            error={!!errors.email}
-                                            helperText={errors.email && errors.email.message}
+                                            error={!(errors.email == null)}
+                                            helperText={(errors.email != null) && errors.email.message}
                                             defaultValue={staffData.email}
                                         />
                                     </div>
@@ -159,9 +157,9 @@ export default function EditStaff () {
                                             label="Gender *"
                                             sx={{ width: '90%' }}
                                             value={staffData.gender}
-                                            onChange={(e) => setStaffData({ ...staffData, gender: e.target.value })}
-                                            error={!!errors.gender}
-                                            helperText={errors.gender && "Gender is required" }
+                                            onChange={(e) => { setStaffData({ ...staffData, gender: e.target.value }) }}
+                                            error={!(errors.gender == null)}
+                                            helperText={(errors.gender != null) && 'Gender is required' }
                                         >
                                             <MenuItem value="Male">
                                                 Male
@@ -182,7 +180,7 @@ export default function EditStaff () {
                                         <Button type="submit" variant="contained" startIcon={<AddCircleOutlineIcon />} size="large"
                                                 style={{ backgroundColor: selectedColor }}
                                         >
-                                            Save Changes 
+                                            Save Changes
                                         </Button>
                                     </div>
                                 </Grid>
@@ -191,7 +189,7 @@ export default function EditStaff () {
                     </Paper>
                 </Container>
             </Box>
-            <ColorPalette onSelectColor={(color: string) => handleColorChange(color)} />
+            <ColorPalette onSelectColor={(color: string) => { handleColorChange(color) }} />
         </React.Fragment>
-    )
+  )
 }

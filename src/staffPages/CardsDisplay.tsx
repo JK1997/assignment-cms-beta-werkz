@@ -1,19 +1,19 @@
-import { Grid } from '@mui/material';
+import { Grid } from '@mui/material'
 import React from 'react'
-import {StaffCard} from './StaffCard'
+import { StaffCard } from './StaffCard'
 
 interface CardsDisplayProps {
-    staffs: any[]
-    loading: boolean
-    username: string
+  staffs: any[]
+  loading: boolean
+  username: string
 }
 
-const CardsDisplay = ({staffs, loading, username}: CardsDisplayProps) => {
-    if (loading) {
-        return <h2>Loading...</h2>
-    }
+const CardsDisplay = ({ staffs, loading, username }: CardsDisplayProps) => {
+  if (loading) {
+    return <h2>Loading...</h2>
+  }
 
-    return (
+  return (
         <Grid container spacing={2}>
             {staffs?.map((staff: { id: number, name: string, gender: string, age: number, email: string }, index: number) => (
                 <Grid key={index} item xs={12} md={6}>
@@ -28,7 +28,7 @@ const CardsDisplay = ({staffs, loading, username}: CardsDisplayProps) => {
                 </Grid>
             ))}
         </Grid>
-    )
+  )
 }
 
 export default CardsDisplay

@@ -1,9 +1,9 @@
-import {Grid, Stack, Typography } from '@mui/material'
+import { Grid, Stack, Typography } from '@mui/material'
 import React from 'react'
 import EmptyStateImage from '../images/empty-state.svg'
 
-export default function EmptyStaffList(){
-    return(
+export default function EmptyStaffList () {
+  return (
         <Stack spacing={2} justifyContent="center" alignItems="center" my={15}>
             <img src={EmptyStateImage} />
             <Typography variant="h4" gutterBottom>
@@ -14,5 +14,5 @@ export default function EmptyStaffList(){
                 to create a new profile.
             </Typography>
         </Stack>
-    )
+  )
 }
