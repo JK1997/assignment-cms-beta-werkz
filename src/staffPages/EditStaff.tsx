@@ -11,7 +11,7 @@ export default function EditStaff () {
   const navigate = useNavigate()
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
-  const username = queryParams.get('username')!
+  const username = queryParams.get('username') ?? ''
   const { id } = useParams<{ id: string }>()
   const [selectedColor, setSelectedColor] = useState('#628DF2') // Default color
   const [successMsg, setSuccessMsg] = useState('')
@@ -42,28 +42,29 @@ export default function EditStaff () {
     reset
   } = useForm<FormData>()
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const parsedId: number | undefined = id ? parseInt(id, 10) : undefined
     const updatedStaffs = staffs.map((staff) =>
-      staff.id === (id ? parseInt(id, 10) : NaN) ? { ...staff, ...data } : staff
+      (parsedId !== undefined && staff.id === parsedId) ? { ...staff, ...data } : staff
     )
 
     localStorage.setItem('staffs', JSON.stringify(updatedStaffs))
     setStaffs(updatedStaffs)
 
     setSuccessMsg('Staff profile updated  successfully.')
-    setTimeout(() => {
-      navigate('/staffList')
-    }, 2000)
+
+    await new Promise<void>((resolve) => setTimeout(resolve, 2000))
+    navigate('/staffList')
   }
 
   useEffect(() => {
     // Fetch staff data from localStorage based on the ID
-    if (id) {
+    if (id !== undefined) {
       const fetchStaffData = () => {
-        const savedStaffs = JSON.parse(localStorage.getItem('staffs') || '[]')
-        const selectedStaff = savedStaffs.find((staff: { id: number }) => staff.id === parseInt(id, 10))
+        const savedStaffs = JSON.parse(localStorage.getItem('staffs') ?? '[]')
+        const selectedStaff = savedStaffs.find((staff: { id: number }) => staff.id === parseInt(id, 10)) as { id: number, name: string, gender: string, age: number, email: string } | undefined
 
-        if (selectedStaff) {
+        if (selectedStaff != null) {
           setStaffData(selectedStaff)
         }
       }
@@ -77,7 +78,7 @@ export default function EditStaff () {
   }, [staffData, reset])
 
   useEffect(() => {
-    const savedStaffs = JSON.parse(localStorage.getItem('staffs') || '[]')
+    const savedStaffs = JSON.parse(localStorage.getItem('staffs') ?? '[]')
     setStaffs(savedStaffs)
   }, [])
 
@@ -88,7 +89,7 @@ export default function EditStaff () {
                 <Container sx={{ pt: 5, pb: 5 }}>
                     <Paper elevation={0} sx={{ p: 5, minHeight: '60vh' }}>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            {successMsg && <Alert severity="success" sx={{ mb: 3 }}>{successMsg}</Alert>}
+                            {successMsg.length > 0 && <Alert severity="success" sx={{ mb: 3 }}>{successMsg}</Alert>}
                             <Grid container spacing={2} mb={2}>
                                 <Grid xs={12} md={12} mb={5}>
                                     <Typography variant="h5">Edit Profile</Typography>
@@ -144,7 +145,7 @@ export default function EditStaff () {
                                             })}
                                             inputProps={{ maxLength: 30 }}
                                             error={!(errors.email == null)}
-                                            helperText={(errors.email != null) && errors.email.message}
+                                            helperText={errors.email?.message}
                                             defaultValue={staffData.email}
                                         />
                                     </div>

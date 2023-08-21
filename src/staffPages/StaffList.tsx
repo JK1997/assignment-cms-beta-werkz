@@ -15,7 +15,7 @@ export default function StaffList () {
   const theme = useTheme()
   const isSmBreakpoint = useMediaQuery(theme.breakpoints.down('sm'))
   const queryParams = new URLSearchParams(location.search)
-  const username = queryParams.get('username')!
+  const username = queryParams.get('username') ?? ''
   const [loading, setLoading] = useState(false)
   const [staffs, setStaffs] = useState<Array<{ name: string, gender: string, age: number, email: string }>>([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -33,7 +33,7 @@ export default function StaffList () {
     try {
       /* const staffs = StaffsData.staffs
       setStaffs(staffs) */
-      const savedStaffs = JSON.parse(localStorage.getItem('staffs') || '[]')
+      const savedStaffs = JSON.parse(localStorage.getItem('staffs') ?? '[]')
       setStaffs(savedStaffs)
     } catch (error) {
       setErrorMessage("Couldn't load staff data")
@@ -58,7 +58,7 @@ export default function StaffList () {
   return (
         <React.Fragment>
             <TopNav username={username}/>
-            <Box sx={{ backgroundColor: tinycolor(selectedColor).lighten(30).toString(), minHeight: `calc(100vh - ${64}px)` }}>
+            <Box sx={{ backgroundColor: tinycolor(selectedColor ?? '#628DF2').lighten(30).toString(), minHeight: `calc(100vh - ${64}px)` }}>
                 <Container sx={{ pt: 5, pb: 5 }}>
                     <Paper elevation={0} sx={{ p: 5, minHeight: '60vh' }}>
                         <Grid container spacing={1} mb={2}>
@@ -68,7 +68,7 @@ export default function StaffList () {
                             <Grid xs={12} md={6}>
 
                             </Grid>
-                            <Grid xs={12} md={3} sx={{ display: 'flex', justifyContent: isSmBreakpoint ? 'center' : 'flex-end', position: isSmBreakpoint ? 'fixed' : 'static', bottom: 16, right: 10, zIndex: 1000, width: isSmBreakpoint ? '95vw' : 'auto'  }}>
+                            <Grid xs={12} md={3} sx={{ display: 'flex', justifyContent: isSmBreakpoint ? 'center' : 'flex-end', position: isSmBreakpoint ? 'fixed' : 'static', bottom: 16, right: 10, zIndex: 1000, width: isSmBreakpoint ? '95vw' : 'auto' }}>
                                 <Button variant="contained" startIcon={<AddCircleOutlineIcon />} size="large"
                                         style={{ backgroundColor: selectedColor }} onClick={() => { goToAddStaff() }}
                                 >
@@ -76,7 +76,7 @@ export default function StaffList () {
                                 </Button>
                             </Grid>
                         </Grid>
-                        {errorMessage && <Alert severity="error" sx={{ mb: 5 }}>{errorMessage}</Alert>}
+                        {errorMessage.length > 0 && <Alert severity="error" sx={{ mb: 5 }}>{errorMessage}</Alert>}
                         { staffs.length === 0
                           ? <EmptyStaffList/>
                           : <NonEmptyStaffList currentStaffs={currentStaffs}

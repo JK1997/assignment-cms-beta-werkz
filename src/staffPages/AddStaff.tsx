@@ -13,8 +13,8 @@ export default function AddStaff () {
   const [selectedColor, setSelectedColor] = useState('#628DF2') // Default color
   const [successMsg, setSuccessMsg] = useState('')
   const [staffs, setStaffs] = useState<Array<{ id: number, name: string, gender: string, age: number, email: string }>>([])
-  const totalStaffs = location.state?.totalStaffs || 0
-  const username = location.state?.username || ''
+  const totalStaffs: number = location.state?.totalStaffs !== undefined ? location.state.totalStaffs : 0
+  const username: string = location.state?.username !== undefined ? location.state.username : ''
 
   const handleColorChange = (color: string) => {
     setSelectedColor(color)
@@ -39,22 +39,26 @@ export default function AddStaff () {
     reset
   } = useForm<FormData>()
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    const newId = newUserId()
-    const newStaff = { ...data, id: newId }
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      const newId = newUserId()
+      const newStaff = { ...data, id: newId }
 
-    setStaffs((prevStaffs) => [...prevStaffs, newStaff])
+      setStaffs((prevStaffs) => [...prevStaffs, newStaff])
 
-    const existingStaffs = JSON.parse(localStorage.getItem('staffs') || '[]')
-    const updatedStaffs = [...existingStaffs, newStaff]
-    localStorage.setItem('staffs', JSON.stringify(updatedStaffs))
+      const existingStaffs = JSON.parse(localStorage.getItem('staffs') ?? '[]')
+      const updatedStaffs = [...existingStaffs, newStaff]
+      localStorage.setItem('staffs', JSON.stringify(updatedStaffs))
 
-    setSuccessMsg('Staff is created successfully.')
-    reset()
+      setSuccessMsg('Staff is created successfully.')
+      reset()
 
-    setTimeout(() => {
-      navigate('/staffList')
-    }, 2000)
+      setTimeout(() => {
+        navigate('/staffList')
+      }, 2000)
+    } catch (error) {
+      console.error('Error during form submission:', error)
+    }
   }
 
   useEffect(() => {
@@ -68,7 +72,7 @@ export default function AddStaff () {
                 <Container sx={{ pt: 5, pb: 5 }}>
                     <Paper elevation={0} sx={{ p: 5, minHeight: '60vh' }}>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            {successMsg && <Alert severity="success" sx={{ mb: 3 }}>{successMsg}</Alert>}
+                            {successMsg.length > 0 && <Alert severity="success" sx={{ mb: 3 }}>{successMsg}</Alert>}
                             <Grid container spacing={2} mb={2}>
                                     <Grid xs={12} md={12} mb={5}>
                                         <Typography variant="h5">New Profile</Typography>
@@ -120,7 +124,7 @@ export default function AddStaff () {
                                             })}
                                             inputProps={{ maxLength: 30 }}
                                             error={!(errors.email == null)}
-                                            helperText={(errors.email != null) && errors.email.message}
+                                            helperText={errors.email?.message}
                                         />
                                     </div>
                                 </Grid>

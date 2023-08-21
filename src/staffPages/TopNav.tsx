@@ -51,7 +51,7 @@ const TopNav = ({ username }: TopNavProps) => {
                             <FontAwesomeIcon icon={faCircleArrowLeft} size="sm" style={{ color: 'black' }}/>
                         </IconButton>
                     </Tooltip>
-                    <Typography sx={{ color: '#272727', marginLeft: isSmBreakpoint ? 0 : 'auto',  paddingLeft: isSmBreakpoint ? 5 : ''}}>{username !== 'null' && username}</Typography>
+                    <Typography sx={{ color: '#272727', marginLeft: isSmBreakpoint ? 0 : 'auto', paddingLeft: isSmBreakpoint ? 5 : '' }}>{username !== 'null' && username}</Typography>
                     <div>
                         <IconButton
                             size="large"

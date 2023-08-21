@@ -19,7 +19,7 @@ const NonEmptyStaffList = ({ currentStaffs, loading, cardsPerPage, paginate, sta
             <CardsDisplay staffs={currentStaffs} loading={loading} username={username} />
             <Box display="flex" justifyContent="center" mt={3}>
                 <PaginationComponent cardsPerPage={cardsPerPage} totalCards={staffs.length} paginate={paginate} />
-                <Chip label={'Total ' + staffs.length} sx={{ ml: 2, backgroundColor: selectedColor, color: 'white' }}/>
+                <Chip label={'Total ' + staffs.length.toString()} sx={{ ml: 2, backgroundColor: selectedColor, color: 'white' }}/>
             </Box>
         </div>
   )
