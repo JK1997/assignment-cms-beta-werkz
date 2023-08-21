@@ -39,7 +39,8 @@ export default function AddStaff () {
     reset
   } = useForm<FormData>()
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    // eslint-disable-next-line  @typescript-eslint/no-misused-promises
     try {
       const newId = newUserId()
       const newStaff = { ...data, id: newId }

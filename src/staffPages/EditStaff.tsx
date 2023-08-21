@@ -42,7 +42,9 @@ export default function EditStaff () {
     reset
   } = useForm<FormData>()
 
+  // eslint-disable-next-line  @typescript-eslint/no-misused-promises
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    // eslint-disable-next-line  @typescript-eslint/strict-boolean-expressions
     const parsedId: number | undefined = id ? parseInt(id, 10) : undefined
     const updatedStaffs = staffs.map((staff) =>
       (parsedId !== undefined && staff.id === parsedId) ? { ...staff, ...data } : staff
